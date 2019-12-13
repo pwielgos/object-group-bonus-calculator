@@ -44,36 +44,46 @@ function displayEmployeeBonus(employees) {
   console.log(calculateBonus(employees[i]));
   
 }
+
 function createNewEmployee (employee) {
-  let bonusPercentage = calculateBonus(employee);
+  let bonusPercentage = getBonusPercentage(employee);
   let totalBonus = bonusPercentage * employee.annualSalary;
-  let totalCompensation = Number(employee.annualSalary) + totalBonus;
-  let newEmployee = {
+  let totalCompensation = employee.annualSalary + totalBonus;
+  let bonusifiedEmployee = {
     name: employees.name,
     bonusPercentage: bonusPercentage,
     totalCompensation: totalCompensation,
     totalBonus: totalBonus
   }
-  return newEmployee;
 }
 
-function calculateBonus (employee){
+function getBonusPercentage(employee){
   let bonusPercentage = 0;
   if ( employee.reviewRating <= 2 ) {
-    bonusPercentage = 0;
+    return bonusPercentage;
   }
     else if ( employee.reviewRating === 3 ) {
-      bonusPercentage += .04;
+      bonusPercentage = 4;
     }
     else if ( employee.reviewRating === 4 ) {
-      bonusPercentage += .06;
+      bonusPercentage = 6;
     }
     else if ( employee.reviewRating === 5 ) {
-      bonusPercentage += .1;
+      bonusPercentage = 10;
     }
   if ( employee.employeeNumber.length === 4 ){
-    bonusPercentage += .04;
+    bonusPercentage += 5;
   }
+  let salary = Number(employee.annualSalary)
+  if (salary > 65000){
+    bonusPercentage -= 1;
+  }
+  if (bonusPercentage > 13){
+    bonusPercentage = 13;
+  } else if ( bonusPercentage < 0){
+    bonusPercentage = 0;
+  }
+  return bonusPercentage/100;
 }
 
 console.log( createNewEmployee(employees[2]));
