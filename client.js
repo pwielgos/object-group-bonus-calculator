@@ -40,38 +40,52 @@ const employees = [
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
-console.log(employees);
+function bonusCalculator(employee) {
+  let newEmployee = {
+    name: employee.name,
+    bonusPercentage: 'bonusPercentage',
+    totalCompensation: 'totalCompensation',
+    totalBonus: 'totalBonus'
+  };
 
-function bonusCalculator(employeeToCalc) {
-  let newEmployee = {};
-  if (employeeToCalc.reviewRating <= 2) {
-    newEmployee.name = employeeToCalc.name;
+  if (employee.reviewRating <= 2) {
     newEmployee.bonusPercentage = 0;
-    newEmployee.totalCompensation = employeeToCalc.annualSalary;
-    newEmployee.totalBonus = 0;
-  } else if (employeeToCalc.reviewRating === 3) {
-    newEmployee.name = employeeToCalc.name;
+  } else if (employee.reviewRating === 3) {
     newEmployee.bonusPercentage = .04;
-    newEmployee.totalCompensation = (employeeToCalc.annualSalary * 1.04);
-    newEmployee.totalBonus = (employeeToCalc.annualSalary * newEmployee.bonusPercentage);
-  } else if (employeeToCalc.reviewRating === 4) {
-    newEmployee.name = employeeToCalc.name;
+  } else if (employee.reviewRating === 4) {
     newEmployee.bonusPercentage = .06;
-    newEmployee.totalCompensation = (employeeToCalc.annualSalary * 1.06);
-    newEmployee.totalBonus = (employeeToCalc.annualSalary * newEmployee.bonusPercentage);
-  } else if (employeeToCalc.reviewRating === 5) {
-    newEmployee.name = employeeToCalc.name;
-    newEmployee.bonusPercentage = .10;
-    newEmployee.totalCompensation = (employeeToCalc.annualSalary * 1.10);
-    newEmployee.totalBonus = (employeeToCalc.annualSalary * newEmployee.bonusPercentage);
+  } else if (employee.reviewRating === 5) {
+    newEmployee.bonusPercentage = .1;
   }
-  if (employeeToCalc.employeeNumber.length === 4) {
-    newEmployee.bonusPercentage += .05;
+  
+  if (employee.employeeNumber.length === 4) {
+    newEmployee.bonusPercentage += 0.05;
+    newEmployee.totalBonus = newEmployee.bonusPercentage * employee.annualSalary;
   }
-  if (employeeToCalc.annualSalary > 65000) {
-    newEmployee.bonusPercentage -= .01;
+
+  if (newEmployee.totalCompensation > 65000) {
+    newEmployee.bonusPercentage -= 0.01;
+    newEmployee.totalBonus = newEmployee.bonusPercentage * employee.annualSalary;
   }
+
+  if (newEmployee.totalBonus > 0.13) {
+    newEmployee.totalBonus = 0.13;
+    newEmployee.totalBonus = newEmployee.bonusPercentage * employee.annualSalary;
+  }
+
+  if (newEmployee.totalBonus < 0) {
+    newEmployee.totalBonus = 0;
+    newEmployee.totalBonus = newEmployee.bonusPercentage * employee.annualSalary;
+  }
+
+  newEmployee.totalBonus = newEmployee.bonusPercentage * employee.annualSalary;
+  newEmployee.totalCompensation = Number(employee.annualSalary) + newEmployee.totalBonus;
+  
   return newEmployee;
 }
 
 console.log(bonusCalculator((employees[0])));
+console.log(bonusCalculator((employees[1])));
+console.log(bonusCalculator((employees[2])));
+console.log(bonusCalculator((employees[3])));
+console.log(bonusCalculator((employees[4])));
